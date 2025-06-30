@@ -10,14 +10,18 @@ RUN pip3 install conan==2.0.16
 
 WORKDIR /project
 
-COPY . .
+COPY conanfile.* ./
+COPY CMakeLists.txt ./
 
 RUN conan profile detect --force
 RUN conan install . --build=missing
 
+COPY . .
+
 RUN cmake -B build -S . \
-  -DCMAKE_TOOLCHAIN_FILE=build/Release/generators/conan_toolchain.cmake \
-  -DCMAKE_BUILD_TYPE=Release
+    -DCMAKE_TOOLCHAIN_FILE=build/Release/generators/conan_toolchain.cmake \
+    -DCMAKE_BUILD_TYPE=Release
+
 RUN cmake --build build
 
 CMD ["./build/main"]
