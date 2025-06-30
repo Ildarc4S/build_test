@@ -38,6 +38,7 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         context: .
+        file: ./docker/Dockerfile
         load: true
         tags: my-cpp-app:latest
         cache-from: type=local,src=/tmp/.buildx-cache
